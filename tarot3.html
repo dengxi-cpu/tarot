@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>梦角塔罗占卜</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'midnight': '#0f0f23',
+                        'cosmic': '#1a1a2e',
+                        'nebula': '#16213e',
+                        'aurora': '#e91e63',
+                        'rose-glow': '#ff6b9d',
+                        'pink-dream': '#ffeaa7',
+                        'mystic-purple': '#6a0dad',
+                        'deep-violet': '#4a154b',
+                        'gold-shine': '#ffd700'
+                    },
+                    fontFamily: {
+                        'elegant': ['Inter', 'system-ui', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive'],
+                        'chinese': ['Ma Shan Zheng', 'serif'],
+                        'handwrite': ['Kalam', 'cursive'],
+                        'serif': ['Noto Serif SC', 'serif'],
+                        'calligraphy': ['Source Han Serif SC', 'Noto Serif SC', 'serif'],
+                        'vintage': ['Zhi Mang Xing', 'cursive'],
+                    },
+                    backgroundImage: {
+                        'cosmic-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        'aurora-gradient': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                        'dream-gradient': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                        'mystic-gradient': 'linear-gradient(135deg, #6a0dad 0%, #4a154b 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Ma+Shan+Zheng&family=Kalam:wght@400;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Source+Han+Serif+SC:wght@400;500;600;700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 30px rgba(233, 30, 99, 0.3), 
+                           0 0 60px rgba(233, 30, 99, 0.1),
+                           inset 0 1px 0 rgba(255, 255, 255, 0.1); 
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(233, 30, 99, 0.5), 
+                           0 0 80px rgba(233, 30, 99, 0.2),
+                           inset 0 1px 0 rgba(255, 255, 255, 0.2); 
+            }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes fadeInUp {
+            0% { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        @keyframes mystical-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(106, 13, 173, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(106, 13, 173, 0.7);
+                transform: scale(1.02);
+            }
+        }
+        @keyframes cardFlip {
+            0% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(90deg) scale(0.8); }
+            100% { transform: rotateY(0deg) scale(1); }
+        }
+        @keyframes cardSelect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.05); }
+        }
+        @keyframes cardGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(233, 30, 99, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(233, 30, 99, 0.6);
+            }
+        }
+        
+        .floating { animation: float 4s ease-in-out infinite; }
+        .breathing { animation: breathe 3s ease-in-out infinite; }
+        .glow-effect { animation: glow 3s ease-in-out infinite; }
+        .mystical-pulse { animation: mystical-pulse 2.5s ease-in-out infinite; }
+        .fade-in-up { animation: fadeInUp 1s ease-out; }
+        .card-flip { animation: cardFlip 0.6s ease-in-out; }
+        .card-select { animation: cardSelect 0.3s ease-out; }
+        .card-glow { animation: cardGlow 2s ease-in-out infinite; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glass-button {
+            background: linear-gradient(145deg, rgba(106, 13, 173, 0.8), rgba(233, 30, 99, 0.6));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(106, 13, 173, 0.3);
+        }
+        
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .mystic-gradient-text {
+            background: linear-gradient(135deg, #6a0dad 0%, #ff6b9d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cosmic-bg {
+            background: radial-gradient(ellipse at top, #1a1a2e 0%, #0f0f23 100%);
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(106, 13, 173, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(233, 30, 99, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(255, 107, 157, 0.08) 0%, transparent 50%);
+        }
+
+        .tarot-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 22rem;
+            margin: 0 auto;
+        }
+        
+        .tarot-row {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .tarot-card-overlapped {
+            position: relative;
+            margin-left: -1rem;
+            transition: transform 0.3s ease, z-index 0.3s ease;
+        }
+        
+        .tarot-card-overlapped:first-child {
+            margin-left: 0;
+        }
+        
+        .tarot-card-overlapped:hover {
+            transform: translateY(-10px) scale(1.05);
+            z-index: 10;
+        }
+        
+        .tarot-card-overlapped.selected {
+            transform: translateY(-15px) scale(1.1);
+            z-index: 15;
+        }
+        
+        .w-18 { width: 4.5rem; }
+        .h-28 { height: 7rem; }
+        
+        .tarot-card-front.selected {
+            transform: translateY(-10px) scale(1.1);
+            z-index: 10;
+        }
+        .scrollable-content {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        .apple-symbol {
+            filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.6));
+        }
+
+        .tab-active {
+            background: linear-gradient(145deg, rgba(106, 13, 173, 0.8), rgba(233, 30, 99, 0.6)) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+        }
+
+        .tab-inactive {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .question-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(106, 13, 173, 0.4);
+        }
+    </style>
+</head>
+<body class="font-elegant cosmic-bg relative overflow-x-hidden">
+    
+    <!-- 封面页 -->
+    <div id="cover-page" class="flex flex-col items-center justify-center min-h-screen p-6 relative z-20">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[10%] left-[10%] w-1 h-1 bg-aurora rounded-full opacity-60 floating"></div>
+            <div class="absolute top-[25%] right-[15%] w-1.5 h-1.5 bg-mystic-purple rounded-full opacity-70 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute top-[45%] left-[20%] w-1 h-1 bg-rose-glow rounded-full opacity-50 floating" style="animation-delay: 2s;"></div>
+            <div class="absolute top-[70%] right-[25%] w-2 h-2 bg-gold-shine rounded-full opacity-40 floating" style="animation-delay: 1.5s;"></div>
+            <div class="absolute bottom-[20%] left-[15%] w-1.5 h-1.5 bg-aurora rounded-full opacity-60 floating" style="animation-delay: 0.5s;"></div>
+        </div>
+
+        <!-- 主要内容容器 -->
+        <div class="text-center space-y-8 max-w-sm mx-auto relative z-10">
+            
+            <!-- 苹果图标 -->
+            <div class="flex justify-center fade-in-up">
+                <div class="text-8xl floating breathing apple-symbol">🍎</div>
+            </div>
+            
+            <!-- 主文案容器 -->
+            <div class="glass-card rounded-3xl p-8 space-y-6 relative overflow-hidden fade-in-up" style="animation-delay: 0.3s;">
+                <!-- 装饰性闪光效果 -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-mystic-purple to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-6">
+                    <h1 class="text-2xl font-script mystic-gradient-text font-bold leading-relaxed">
+                        梦角塔罗占卜
+                    </h1>
+                    
+                    <div class="space-y-4">
+                        <p class="text-gray-200 text-base leading-relaxed font-serif font-light">
+                            来到这里，心中大概有些困惑吧。
+                        </p>
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            或许，这里有你的答案。
+                        </p>
+                    </div>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-mystic-purple to-rose-glow mx-auto"></div>
+                    
+                    <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                        带着你的困惑，点击<span class="mystic-gradient-text font-medium">"开始"</span>
+                    </p>
+                </div>
+                
+                <!-- 开始按钮 -->
+                <div class="pt-4">
+                    <button 
+                        onclick="goToQuestionPage()" 
+                        class="w-full glass-button text-white py-4 rounded-xl font-semibold text-lg hover:scale-[1.02] transition-all relative overflow-hidden group mystical-pulse font-serif"
+                    >
+                        <span class="relative z-10">开始占卜</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-mystic-purple to-aurora opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 底部装饰 -->
+            <div class="flex justify-center space-x-4 opacity-40 fade-in-up" style="animation-delay: 0.6s;">
+                <div class="text-mystic-purple text-sm">✨</div>
+                <div class="text-aurora text-sm">🔮</div>
+                <div class="text-rose-glow text-sm">🌙</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 问题选择页 -->
+    <div id="question-page" class="hidden min-h-screen relative z-20 flex flex-col p-4">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[12%] left-[8%] w-1.5 h-1.5 bg-gold-shine rounded-full opacity-60 floating"></div>
+            <div class="absolute top-[28%] right-[10%] w-1 h-1 bg-aurora rounded-full opacity-50 floating" style="animation-delay: 1.5s;"></div>
+            <div class="absolute top-[55%] left-[12%] w-2 h-2 bg-mystic-purple rounded-full opacity-40 floating" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-[25%] right-[15%] w-1.5 h-1.5 bg-rose-glow rounded-full opacity-70 floating" style="animation-delay: 1s;"></div>
+        </div>
+
+        <!-- 顶部标题区域 -->
+        <div class="flex-shrink-0 text-center px-4 pt-8 pb-6">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden max-w-sm mx-auto">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <div class="text-aurora text-lg">🔮</div>
+                        <h2 class="text-lg font-script mystic-gradient-text font-bold">请选择你的问题</h2>
+                        <div class="text-aurora text-lg">🔮</div>
+                    </div>
+                    
+                    <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                        凭借内心的直觉，选择最触动你的问题
+                    </p>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-mystic-purple to-aurora mx-auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 问题选择区域 -->
+        <div class="flex-1 flex flex-col justify-center px-4 py-6 space-y-4">
+            <!-- 问题1 -->
+            <div class="question-card glass-card rounded-2xl p-5 relative overflow-hidden fade-in-up" onclick="selectQuestion(1)" style="animation-delay: 0.1s;">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/50 to-transparent"></div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="text-mystic-purple text-xl flex-shrink-0 mt-1">💕</div>
+                    <div class="flex-1">
+                        <h3 class="text-aurora font-medium font-serif text-sm mb-2">第一次的缘起</h3>
+                        <p class="text-gray-200 text-xs leading-relaxed font-serif">
+                            你们会在什么关系、什么情景下发生第一次，是谁先主动，主动的人会如何诱惑对方？
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 问题2 -->
+            <div class="question-card glass-card rounded-2xl p-5 relative overflow-hidden fade-in-up" onclick="selectQuestion(2)" style="animation-delay: 0.2s;">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent"></div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="text-aurora text-xl flex-shrink-0 mt-1">🔥</div>
+                    <div class="flex-1">
+                        <h3 class="text-rose-glow font-medium font-serif text-sm mb-2">激情战况</h3>
+                        <p class="text-gray-200 text-xs leading-relaxed font-serif">
+                            你们当时的战况如何？姿势如何？地点如何？会说些什么？
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 问题3 -->
+            <div class="question-card glass-card rounded-2xl p-5 relative overflow-hidden fade-in-up" onclick="selectQuestion(3)" style="animation-delay: 0.3s;">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-rose-glow/50 to-transparent"></div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="text-rose-glow text-xl flex-shrink-0 mt-1">🌟</div>
+                    <div class="flex-1">
+                        <h3 class="text-gold-shine font-medium font-serif text-sm mb-2">事后变化</h3>
+                        <p class="text-gray-200 text-xs leading-relaxed font-serif">
+                            事后你们关系和灵魂会发生什么变化？
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部返回按钮 -->
+        <div class="flex-shrink-0 px-4 pb-8">
+            <button 
+                onclick="showPage('cover-page')" 
+                class="w-full glass-card border border-white/20 text-white py-3 rounded-xl font-medium text-sm hover:scale-[1.02] transition-all relative overflow-hidden group font-serif"
+            >
+                <span class="relative z-10">🔮 返回封面</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 问题1 - 抽牌页 -->
+    <div id="draw-page1" class="hidden min-h-screen relative z-20 flex flex-col p-4">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[15%] left-[8%] w-1 h-1 bg-gold-shine rounded-full opacity-50 floating"></div>
+            <div class="absolute top-[30%] right-[12%] w-1.5 h-1.5 bg-mystic-purple rounded-full opacity-60 floating" style="animation-delay: 1.5s;"></div>
+            <div class="absolute top-[50%] left-[15%] w-1 h-1 bg-aurora rounded-full opacity-40 floating" style="animation-delay: 2.5s;"></div>
+            <div class="absolute top-[70%] right-[20%] w-2 h-2 bg-rose-glow rounded-full opacity-50 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-[25%] left-[10%] w-1.5 h-1.5 bg-gold-shine rounded-full opacity-60 floating" style="animation-delay: 0.8s;"></div>
+        </div>
+
+        <!-- 顶部问题区域 -->
+        <div class="flex-shrink-0 text-center px-4 pt-6 pb-8">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden max-w-md mx-auto">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <div class="text-aurora text-lg">💕</div>
+                        <h2 class="text-lg font-script mystic-gradient-text font-bold">第一次的缘起</h2>
+                        <div class="text-aurora text-lg">💕</div>
+                    </div>
+                    
+                    <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                        你们会在什么关系、什么情景下发生第一次，是谁先主动，主动的人会如何诱惑对方？
+                    </p>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-mystic-purple to-aurora mx-auto"></div>
+                    
+                    <p class="text-gray-300 text-xs leading-relaxed font-serif italic">
+                        此刻，请深吸一口气，凭直觉选取<span class="text-aurora font-medium">3张</span>神秘塔罗
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 塔罗牌网格区域 -->
+        <div class="flex-1 flex items-center justify-center px-2 py-4">
+            <div class="tarot-grid" id="tarot-grid1">
+                <!-- 10张塔罗牌将通过JavaScript生成 -->
+            </div>
+        </div>
+
+        <!-- 底部状态区域 -->
+        <div class="flex-shrink-0 px-4 pb-6">
+            <!-- 选择计数器 -->
+            <div class="text-center mb-4">
+                <div class="glass-card rounded-full px-6 py-2 inline-block">
+                    <span class="text-gray-300 text-sm font-serif">已选择：</span>
+                    <span id="selected-count1" class="text-aurora font-medium font-serif">0</span>
+                    <span class="text-gray-300 text-sm font-serif">/3</span>
+                </div>
+            </div>
+            
+            <!-- 下一步按钮 -->
+            <button 
+                id="next-to-select-btn1"
+                onclick="goToSelectPage(1)" 
+                class="w-full glass-button text-white py-4 rounded-xl font-semibold text-base transition-all relative overflow-hidden group font-serif opacity-0 pointer-events-none"
+                style="transition: opacity 0.5s ease;"
+            >
+                <span class="relative z-10">✨ 下一步</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-mystic-purple to-aurora opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 问题1 - 选牌页 -->
+    <div id="select-page1" class="hidden min-h-screen relative z-20 flex flex-col p-4">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[20%] left-[5%] w-1.5 h-1.5 bg-aurora rounded-full opacity-60 floating"></div>
+            <div class="absolute top-[35%] right-[8%] w-1 h-1 bg-gold-shine rounded-full opacity-50 floating" style="animation-delay: 2s;"></div>
+            <div class="absolute top-[60%] left-[12%] w-2 h-2 bg-mystic-purple rounded-full opacity-40 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-[30%] right-[15%] w-1.5 h-1.5 bg-rose-glow rounded-full opacity-70 floating" style="animation-delay: 1.8s;"></div>
+        </div>
+
+        <!-- 顶部指引区域 -->
+        <div class="flex-shrink-0 text-center px-4 pt-8 pb-6">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden max-w-sm mx-auto">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/50 to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <div class="text-mystic-purple text-lg">✨</div>
+                        <h2 class="text-lg font-script mystic-gradient-text font-bold">心灵之选</h2>
+                        <div class="text-mystic-purple text-lg">✨</div>
+                    </div>
+                    
+                    <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                        请凭借直觉选取你心中的答案
+                    </p>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-aurora to-rose-glow mx-auto"></div>
+                    
+                    <p class="text-gray-300 text-xs leading-relaxed font-serif italic">
+                        静下心来，让灵魂为你指引方向
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 三张牌选择区域 -->
+        <div class="flex-1 flex items-center justify-center px-4 py-6">
+            <div class="flex justify-center space-x-4 max-w-sm mx-auto" id="selected-cards1">
+                <!-- 三张选中的牌将通过JavaScript生成 -->
+            </div>
+        </div>
+
+        <!-- 底部确认区域 -->
+        <div class="flex-shrink-0 px-4 pb-8">
+            <!-- 确认按钮 -->
+            <button 
+                id="confirm-choice-btn1"
+                onclick="goToAnalysisPage(1)" 
+                class="w-full glass-button text-white py-4 rounded-xl font-semibold text-base transition-all relative overflow-hidden group font-serif opacity-0 pointer-events-none"
+                style="transition: opacity 0.5s ease;"
+            >
+                <span class="relative z-10">🌟 就是它了</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-aurora to-rose-glow opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 问题1 - 解析页 -->
+    <div id="analysis-page1" class="hidden min-h-screen relative z-20 flex flex-col">
+        <!-- 塔罗牌显示区域 -->
+        <div class="flex-shrink-0 flex justify-center items-center pt-8 pb-6 px-4">
+            <div class="relative">
+                <!-- 塔罗牌容器 -->
+                <div class="w-32 h-48 glass-card rounded-xl p-3 mystical-pulse relative overflow-hidden">
+                    <!-- 装饰性光效 -->
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-shine/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/50 to-transparent"></div>
+                    
+                    <!-- 魔鬼牌图片 -->
+                    <div class="w-full h-full bg-gradient-to-br from-deep-violet/80 via-mystic-purple/60 to-aurora/40 rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                        <!-- 背景纹理 -->
+                        <div class="absolute inset-0 opacity-20">
+                            <div class="w-full h-full bg-gradient-to-br from-gold-shine/20 to-transparent"></div>
+                        </div>
+                        
+                        <!-- 牌面内容 -->
+                        <div class="relative z-10 text-center">
+                            <div class="text-4xl mb-2 filter drop-shadow-lg">😈</div>
+                            <div class="text-gold-shine text-xs font-serif font-bold mb-1">XV</div>
+                            <div class="text-white text-xs font-serif font-medium">THE DEVIL</div>
+                            <div class="text-gray-300 text-xs font-chinese mt-1">魔鬼</div>
+                        </div>
+                        
+                        <!-- 装饰性符号 -->
+                        <div class="absolute top-2 left-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute top-2 right-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute bottom-2 left-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute bottom-2 right-2 text-gold-shine/30 text-xs">✦</div>
+                    </div>
+                </div>
+                
+                <!-- 牌名显示 -->
+                <div class="text-center mt-4">
+                    <h2 class="text-xl font-script mystic-gradient-text font-bold">魔鬼牌</h2>
+                    <p class="text-gray-400 text-sm font-serif mt-1">The Devil</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 解析内容区域 -->
+        <div class="flex-1 px-4 pb-32 scrollable-content">
+            <div class="max-w-md mx-auto">
+                
+                <!-- 动态内容容器 -->
+                <div id="analysis-content1" class="glass-card rounded-2xl p-5 relative overflow-hidden scrollable-content scroll-gradient" style="max-height: 70vh; min-height: 400px;">
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent"></div>
+                    
+                    <!-- 卡面解析内容 -->
+                    <div id="card-analysis1" class="space-y-4">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-aurora rounded-full"></div>
+                            <h3 class="text-aurora font-medium font-serif text-lg">卡面解析</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            魔鬼牌，常常被误解为邪恶与恐惧，但在这里，它代表的是最原始、最无法抗拒的欲望与吸引力。牌面上，被锁链束缚的男女，象征着他们被彼此的魅力和本能深深吸引，无法逃脱。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            这锁链并非牢不可破，只要他们愿意，随时可以挣脱，但他们选择沉溺其中。魔鬼本身，则代表着物质世界、感官享受以及挣脱常规束缚的诱惑力。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            这张牌指向的不是邪恶，而是一种极致的、带着危险气息的浪漫，是点燃理智的火焰，是灵魂深处最诚实的渴望。它告诉你，有些吸引力，是命中注定，是无法用道德和规则来衡量的。
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-mystic-purple/10 to-aurora/10 rounded-xl p-4 border border-mystic-purple/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                如果你的心选择了这张"魔鬼"，那么恭喜你，你和他之间的第一次，将是一场充满了禁忌感与致命吸引力的宿命交锋。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+
+                    <!-- 关系与情景内容 -->
+                    <div id="relationship-analysis1" class="space-y-4 hidden">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-rose-glow rounded-full"></div>
+                            <h3 class="text-rose-glow font-medium font-serif text-lg">关系与情景</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            你们的关系可能并非传统意义上的"稳定情侣"。或许是"友达以上，恋人未满"，彼此试探，享受着那份不说破的暧昧；又或许你们之间存在着某种"身份的阻碍"，让这份感情带上了一丝"不该如此"的刺激感。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            你们的第一次，极有可能发生在一个私密、昏暗、能将人内心欲望放大的空间里——比如一场喧闹派对后只剩你们二人的角落，一个装潢华丽但气氛暧昧的酒店房间，甚至是他的私人工作室，在紧张工作后的深夜。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            空气中会弥漫着酒精、香水或是他身上独特的、令人安心又危险的气息。这将是一个充满禁忌与诱惑的神秘时刻，所有的感官都会被无限放大。
+                        </p>
+
+                        <div class="bg-gradient-to-r from-rose-glow/10 to-aurora/10 rounded-xl p-4 border border-rose-glow/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                在这样的环境下，你们之间的欲望将如火山般爆发，一发不可收拾。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+
+                    <!-- 主动与诱惑内容 -->
+                    <div id="seduction-analysis1" class="space-y-4 hidden">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-gold-shine rounded-full"></div>
+                            <h3 class="text-gold-shine font-medium font-serif text-lg">主动与诱惑</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            主动的人，毫无疑问是<span class="text-aurora font-bold">你的梦角哥</span>。他，就是那个手持苹果的"魔鬼"，看穿了你内心所有的渴望与伪装。他不会用温柔的情话铺垫，他的诱惑是直接的、霸道的，充满了侵略性。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            他会先用眼神锁定你，那目光深邃如潭，仿佛能把你吸进去，让你无处可逃。他可能会把你困在他与墙壁之间，一手撑在你耳侧，用低沉的、带着气音的嗓音在你耳边说：
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-deep-violet/20 to-mystic-purple/20 rounded-xl p-4 border border-mystic-purple/30">
+                            <p class="text-aurora text-sm font-serif italic text-center">
+                                "你以为，你能逃得掉吗？"
+                            </p>
+                        </div>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            或者，他会握住你的手，用指腹摩挲你的手心，那酥麻的触感会像电流一样瞬间传遍你的全身。他不会问你"可不可以"，他会用行动告诉你"我想要你"。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            他递给你的"苹果"，就是他身上那股令人沉沦的荷尔蒙气息，是他不容拒绝的吻，是他掌控一切的自信。你在这场交锋中，是"被捕获"的猎物，但你心甘情愿地戴上这甜蜜的锁链，因为你知道，这正是你灵魂深处最期待的沉沦。
+                        </p>
+
+                        <div class="bg-gradient-to-r from-gold-shine/10 to-mystic-purple/10 rounded-xl p-4 border border-gold-shine/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                在他的诱惑下，你将彻底沦陷，享受这场甜美的征服。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部切换按钮 -->
+        <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-midnight via-cosmic/95 to-transparent p-4 backdrop-blur-sm">
+            <div class="flex justify-center space-x-1.5 max-w-md mx-auto">
+                <button 
+                    id="btn-card1"
+                    onclick="switchAnalysisTab(1, 'card')" 
+                    class="flex-1 tab-active text-white py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">🎴 卡面解析</span>
+                </button>
+                
+                <button 
+                    id="btn-relationship1"
+                    onclick="switchAnalysisTab(1, 'relationship')" 
+                    class="flex-1 tab-inactive py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">💕 关系情景</span>
+                </button>
+                
+                <button 
+                    id="btn-seduction1"
+                    onclick="switchAnalysisTab(1, 'seduction')" 
+                    class="flex-1 tab-inactive py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">⭐ 主动诱惑</span>
+                </button>
+            </div>
+            
+            <!-- 返回按钮 -->
+            <div class="mt-3">
+                <button 
+                    onclick="showPage('question-page')" 
+                    class="w-full glass-card border border-white/20 text-white py-3 rounded-xl font-medium text-sm hover:scale-[1.02] transition-all relative overflow-hidden group font-serif max-w-md mx-auto block"
+                >
+                    <span class="relative z-10">🔮 重新占卜</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 问题2相关页面 -->
+    <!-- 问题2 - 抽牌页 -->
+    <div id="draw-page2" class="hidden min-h-screen relative z-20 flex flex-col p-4">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[15%] left-[8%] w-1 h-1 bg-gold-shine rounded-full opacity-50 floating"></div>
+            <div class="absolute top-[30%] right-[12%] w-1.5 h-1.5 bg-mystic-purple rounded-full opacity-60 floating" style="animation-delay: 1.5s;"></div>
+            <div class="absolute top-[50%] left-[15%] w-1 h-1 bg-aurora rounded-full opacity-40 floating" style="animation-delay: 2.5s;"></div>
+            <div class="absolute top-[70%] right-[20%] w-2 h-2 bg-rose-glow rounded-full opacity-50 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-[25%] left-[10%] w-1.5 h-1.5 bg-gold-shine rounded-full opacity-60 floating" style="animation-delay: 0.8s;"></div>
+        </div>
+
+        <!-- 顶部问题区域 -->
+        <div class="flex-shrink-0 text-center px-4 pt-6 pb-8">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden max-w-md mx-auto">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <div class="text-aurora text-lg">🔥</div>
+                        <h2 class="text-lg font-script mystic-gradient-text font-bold">激情战况</h2>
+                        <div class="text-aurora text-lg">🔥</div>
+                    </div>
+                    
+                    <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                        你们当时的战况如何？姿势如何？地点如何？会说些什么？
+                    </p>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-mystic-purple to-aurora mx-auto"></div>
+                    
+                    <p class="text-gray-300 text-xs leading-relaxed font-serif italic">
+                        此刻，请深吸一口气，凭直觉选取<span class="text-aurora font-medium">3张</span>神秘塔罗
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 塔罗牌网格区域 -->
+        <div class="flex-1 flex items-center justify-center px-2 py-4">
+            <div class="tarot-grid" id="tarot-grid2">
+                <!-- 10张塔罗牌将通过JavaScript生成 -->
+            </div>
+        </div>
+
+        <!-- 底部状态区域 -->
+        <div class="flex-shrink-0 px-4 pb-6">
+            <!-- 选择计数器 -->
+            <div class="text-center mb-4">
+                <div class="glass-card rounded-full px-6 py-2 inline-block">
+                    <span class="text-gray-300 text-sm font-serif">已选择：</span>
+                    <span id="selected-count2" class="text-aurora font-medium font-serif">0</span>
+                    <span class="text-gray-300 text-sm font-serif">/3</span>
+                </div>
+            </div>
+            
+            <!-- 下一步按钮 -->
+            <button 
+                id="next-to-select-btn2"
+                onclick="goToSelectPage(2)" 
+                class="w-full glass-button text-white py-4 rounded-xl font-semibold text-base transition-all relative overflow-hidden group font-serif opacity-0 pointer-events-none"
+                style="transition: opacity 0.5s ease;"
+            >
+                <span class="relative z-10">✨ 下一步</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-mystic-purple to-aurora opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 问题2 - 选牌页 -->
+    <div id="select-page2" class="hidden min-h-screen relative z-20 flex flex-col p-4">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[20%] left-[5%] w-1.5 h-1.5 bg-aurora rounded-full opacity-60 floating"></div>
+            <div class="absolute top-[35%] right-[8%] w-1 h-1 bg-gold-shine rounded-full opacity-50 floating" style="animation-delay: 2s;"></div>
+            <div class="absolute top-[60%] left-[12%] w-2 h-2 bg-mystic-purple rounded-full opacity-40 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-[30%] right-[15%] w-1.5 h-1.5 bg-rose-glow rounded-full opacity-70 floating" style="animation-delay: 1.8s;"></div>
+        </div>
+
+        <!-- 顶部指引区域 -->
+        <div class="flex-shrink-0 text-center px-4 pt-8 pb-6">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden max-w-sm mx-auto">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/50 to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <div class="text-mystic-purple text-lg">✨</div>
+                        <h2 class="text-lg font-script mystic-gradient-text font-bold">心灵之选</h2>
+                        <div class="text-mystic-purple text-lg">✨</div>
+                    </div>
+                    
+                    <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                        请凭借直觉选取你心中的答案
+                    </p>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-aurora to-rose-glow mx-auto"></div>
+                    
+                    <p class="text-gray-300 text-xs leading-relaxed font-serif italic">
+                        静下心来，让灵魂为你指引方向
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 三张牌选择区域 -->
+        <div class="flex-1 flex items-center justify-center px-4 py-6">
+            <div class="flex justify-center space-x-4 max-w-sm mx-auto" id="selected-cards2">
+                <!-- 三张选中的牌将通过JavaScript生成 -->
+            </div>
+        </div>
+
+        <!-- 底部确认区域 -->
+        <div class="flex-shrink-0 px-4 pb-8">
+            <!-- 确认按钮 -->
+            <button 
+                id="confirm-choice-btn2"
+                onclick="goToAnalysisPage(2)" 
+                class="w-full glass-button text-white py-4 rounded-xl font-semibold text-base transition-all relative overflow-hidden group font-serif opacity-0 pointer-events-none"
+                style="transition: opacity 0.5s ease;"
+            >
+                <span class="relative z-10">🌟 就是它了</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-aurora to-rose-glow opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 问题2 - 解析页 -->
+    <div id="analysis-page2" class="hidden min-h-screen relative z-20 flex flex-col">
+        <!-- 塔罗牌显示区域 -->
+        <div class="flex-shrink-0 flex justify-center items-center pt-8 pb-6 px-4">
+            <div class="relative">
+                <!-- 塔罗牌容器 -->
+                <div class="w-32 h-48 glass-card rounded-xl p-3 mystical-pulse relative overflow-hidden">
+                    <!-- 装饰性光效 -->
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-shine/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/50 to-transparent"></div>
+                    
+                    <!-- 力量牌图片 -->
+                    <div class="w-full h-full bg-gradient-to-br from-rose-glow/70 via-aurora/60 to-mystic-purple/50 rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                        <!-- 背景纹理 -->
+                        <div class="absolute inset-0 opacity-20">
+                            <div class="w-full h-full bg-gradient-to-br from-gold-shine/20 to-transparent"></div>
+                        </div>
+                        
+                        <!-- 牌面内容 -->
+                        <div class="relative z-10 text-center">
+                            <div class="text-4xl mb-2 filter drop-shadow-lg">🦁</div>
+                            <div class="text-gold-shine text-xs font-serif font-bold mb-1">VIII</div>
+                            <div class="text-white text-xs font-serif font-medium">STRENGTH</div>
+                            <div class="text-gray-300 text-xs font-chinese mt-1">力量</div>
+                        </div>
+                        
+                        <!-- 装饰性符号 -->
+                        <div class="absolute top-2 left-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute top-2 right-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute bottom-2 left-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute bottom-2 right-2 text-gold-shine/30 text-xs">✦</div>
+                    </div>
+                </div>
+                
+                <!-- 牌名显示 -->
+                <div class="text-center mt-4">
+                    <h2 class="text-xl font-script mystic-gradient-text font-bold">力量牌</h2>
+                    <p class="text-gray-400 text-sm font-serif mt-1">Strength</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 解析内容区域 -->
+        <div class="flex-1 px-4 pb-32 scrollable-content">
+            <div class="max-w-md mx-auto">
+                
+                <!-- 动态内容容器 -->
+                <div id="analysis-content2" class="glass-card rounded-2xl p-5 relative overflow-hidden scrollable-content scroll-gradient" style="max-height: 70vh; min-height: 400px;">
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent"></div>
+                    
+                    <!-- 卡面解析内容 -->
+                    <div id="card-analysis2" class="space-y-4">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-aurora rounded-full"></div>
+                            <h3 class="text-aurora font-medium font-serif text-lg">卡面解析</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            力量牌象征着内在力量、激情与野性的平衡。牌面上，一位女性温柔地抚摸着狮子，这不是征服，而是融合——她用温柔驯服了狂野，用理解征服了力量。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            在你们的激情中，这张牌预示着一种完美的平衡：既有野性的释放，又有温柔的交融。你们的战况不会是简单的征服与被征服，而是两股力量的完美结合。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            狮子代表原始欲望，女性代表控制与引导。你们的第一次将是力量与柔情的完美演绎，既激烈如火，又缠绵如水。
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-rose-glow/10 to-aurora/10 rounded-xl p-4 border border-rose-glow/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                力量牌告诉你，你们的激情将是完美的——既有征服的快感，又有被征服的甜蜜。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+
+                    <!-- 战况与地点内容 -->
+                    <div id="relationship-analysis2" class="space-y-4 hidden">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-rose-glow rounded-full"></div>
+                            <h3 class="text-rose-glow font-medium font-serif text-lg">战况与地点</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            你们的战况将是激烈而深入的。他会展现出前所未有的温柔与霸道的结合——时而轻抚如春风，时而狂野如暴雨。你会发现他有着让人沉醉的双重魅力。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            地点可能是一个既私密又舒适的空间——可能是他的卧室，昏黄的灯光下，柔软的床褥上；也可能是一个意想不到的地方，比如阳台的月光下，或是客厅的沙发上，突如其来的激情让你们顾不上其他。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            姿势上，你们会不断变换，从温柔的面对面凝视，到激烈的纠缠。他会用各种方式让你感受到他的爱意——有时是主导的征服，有时是平等的交融，有时甚至会让你在上面，享受主动的快感。
+                        </p>
+
+                        <div class="bg-gradient-to-r from-aurora/10 to-mystic-purple/10 rounded-xl p-4 border border-aurora/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                每一个动作都充满了力量与温柔的完美平衡，让你沉醉其中。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+
+                    <!-- 言语与表达内容 -->
+                    <div id="seduction-analysis2" class="space-y-4 hidden">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-gold-shine rounded-full"></div>
+                            <h3 class="text-gold-shine font-medium font-serif text-lg">言语与表达</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            在激情中，他的话语会像魔法一样撩拨着你的心弦。他会在你耳边轻语一些让你脸红心跳的话，比如：
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-deep-violet/20 to-aurora/20 rounded-xl p-4 border border-aurora/30 mb-4">
+                            <p class="text-rose-glow text-sm font-serif italic text-center">
+                                "你知道你有多美吗？"
+                            </p>
+                        </div>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            他会称赞你的每一处美丽，告诉你他有多渴望你，有多爱你。他的声音会时而低沉性感，时而温柔如水，每一句话都像羽毛一样轻抚着你的灵魂。
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-aurora/20 to-rose-glow/20 rounded-xl p-4 border border-rose-glow/30 mb-4">
+                            <p class="text-aurora text-sm font-serif italic text-center">
+                                "我想要全部的你..."
+                            </p>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            而你也会在激情中释放自己，可能会忍不住轻呼他的名字，告诉他你的感受。你们的对话会是最私密的情话，是只属于你们两个人的秘密语言。
+                        </p>
+
+                        <div class="bg-gradient-to-r from-gold-shine/10 to-aurora/10 rounded-xl p-4 border border-gold-shine/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                每一句话都是爱的表达，都会让这个夜晚变得更加美好难忘。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部切换按钮 -->
+        <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-midnight via-cosmic/95 to-transparent p-4 backdrop-blur-sm">
+            <div class="flex justify-center space-x-1.5 max-w-md mx-auto">
+                <button 
+                    id="btn-card2"
+                    onclick="switchAnalysisTab(2, 'card')" 
+                    class="flex-1 tab-active text-white py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">🎴 卡面解析</span>
+                </button>
+                
+                <button 
+                    id="btn-relationship2"
+                    onclick="switchAnalysisTab(2, 'relationship')" 
+                    class="flex-1 tab-inactive py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">🔥 战况地点</span>
+                </button>
+                
+                <button 
+                    id="btn-seduction2"
+                    onclick="switchAnalysisTab(2, 'seduction')" 
+                    class="flex-1 tab-inactive py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">💬 言语表达</span>
+                </button>
+            </div>
+            
+            <!-- 返回按钮 -->
+            <div class="mt-3">
+                <button 
+                    onclick="showPage('question-page')" 
+                    class="w-full glass-card border border-white/20 text-white py-3 rounded-xl font-medium text-sm hover:scale-[1.02] transition-all relative overflow-hidden group font-serif max-w-md mx-auto block"
+                >
+                    <span class="relative z-10">🔮 重新占卜</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 问题3相关页面 -->
+    <!-- 问题3 - 抽牌页 -->
+    <div id="draw-page3" class="hidden min-h-screen relative z-20 flex flex-col p-4">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[15%] left-[8%] w-1 h-1 bg-gold-shine rounded-full opacity-50 floating"></div>
+            <div class="absolute top-[30%] right-[12%] w-1.5 h-1.5 bg-mystic-purple rounded-full opacity-60 floating" style="animation-delay: 1.5s;"></div>
+            <div class="absolute top-[50%] left-[15%] w-1 h-1 bg-aurora rounded-full opacity-40 floating" style="animation-delay: 2.5s;"></div>
+            <div class="absolute top-[70%] right-[20%] w-2 h-2 bg-rose-glow rounded-full opacity-50 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-[25%] left-[10%] w-1.5 h-1.5 bg-gold-shine rounded-full opacity-60 floating" style="animation-delay: 0.8s;"></div>
+        </div>
+
+        <!-- 顶部问题区域 -->
+        <div class="flex-shrink-0 text-center px-4 pt-6 pb-8">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden max-w-md mx-auto">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <div class="text-aurora text-lg">🌟</div>
+                        <h2 class="text-lg font-script mystic-gradient-text font-bold">事后变化</h2>
+                        <div class="text-aurora text-lg">🌟</div>
+                    </div>
+                    
+                    <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                        事后你们关系和灵魂会发生什么变化？
+                    </p>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-mystic-purple to-aurora mx-auto"></div>
+                    
+                    <p class="text-gray-300 text-xs leading-relaxed font-serif italic">
+                        此刻，请深吸一口气，凭直觉选取<span class="text-aurora font-medium">3张</span>神秘塔罗
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 塔罗牌网格区域 -->
+        <div class="flex-1 flex items-center justify-center px-2 py-4">
+            <div class="tarot-grid" id="tarot-grid3">
+                <!-- 10张塔罗牌将通过JavaScript生成 -->
+            </div>
+        </div>
+
+        <!-- 底部状态区域 -->
+        <div class="flex-shrink-0 px-4 pb-6">
+            <!-- 选择计数器 -->
+            <div class="text-center mb-4">
+                <div class="glass-card rounded-full px-6 py-2 inline-block">
+                    <span class="text-gray-300 text-sm font-serif">已选择：</span>
+                    <span id="selected-count3" class="text-aurora font-medium font-serif">0</span>
+                    <span class="text-gray-300 text-sm font-serif">/3</span>
+                </div>
+            </div>
+            
+            <!-- 下一步按钮 -->
+            <button 
+                id="next-to-select-btn3"
+                onclick="goToSelectPage(3)" 
+                class="w-full glass-button text-white py-4 rounded-xl font-semibold text-base transition-all relative overflow-hidden group font-serif opacity-0 pointer-events-none"
+                style="transition: opacity 0.5s ease;"
+            >
+                <span class="relative z-10">✨ 下一步</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-mystic-purple to-aurora opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 问题3 - 选牌页 -->
+    <div id="select-page3" class="hidden min-h-screen relative z-20 flex flex-col p-4">
+        <!-- 神秘粒子背景 -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[20%] left-[5%] w-1.5 h-1.5 bg-aurora rounded-full opacity-60 floating"></div>
+            <div class="absolute top-[35%] right-[8%] w-1 h-1 bg-gold-shine rounded-full opacity-50 floating" style="animation-delay: 2s;"></div>
+            <div class="absolute top-[60%] left-[12%] w-2 h-2 bg-mystic-purple rounded-full opacity-40 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-[30%] right-[15%] w-1.5 h-1.5 bg-rose-glow rounded-full opacity-70 floating" style="animation-delay: 1.8s;"></div>
+        </div>
+
+        <!-- 顶部指引区域 -->
+        <div class="flex-shrink-0 text-center px-4 pt-8 pb-6">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden max-w-sm mx-auto">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/50 to-transparent shimmer-effect"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <div class="text-mystic-purple text-lg">✨</div>
+                        <h2 class="text-lg font-script mystic-gradient-text font-bold">心灵之选</h2>
+                        <div class="text-mystic-purple text-lg">✨</div>
+                    </div>
+                    
+                    <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                        请凭借直觉选取你心中的答案
+                    </p>
+                    
+                    <div class="w-16 h-px bg-gradient-to-r from-aurora to-rose-glow mx-auto"></div>
+                    
+                    <p class="text-gray-300 text-xs leading-relaxed font-serif italic">
+                        静下心来，让灵魂为你指引方向
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 三张牌选择区域 -->
+        <div class="flex-1 flex items-center justify-center px-4 py-6">
+            <div class="flex justify-center space-x-4 max-w-sm mx-auto" id="selected-cards3">
+                <!-- 三张选中的牌将通过JavaScript生成 -->
+            </div>
+        </div>
+
+        <!-- 底部确认区域 -->
+        <div class="flex-shrink-0 px-4 pb-8">
+            <!-- 确认按钮 -->
+            <button 
+                id="confirm-choice-btn3"
+                onclick="goToAnalysisPage(3)" 
+                class="w-full glass-button text-white py-4 rounded-xl font-semibold text-base transition-all relative overflow-hidden group font-serif opacity-0 pointer-events-none"
+                style="transition: opacity 0.5s ease;"
+            >
+                <span class="relative z-10">🌟 就是它了</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-aurora to-rose-glow opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 问题3 - 解析页 -->
+    <div id="analysis-page3" class="hidden min-h-screen relative z-20 flex flex-col">
+        <!-- 塔罗牌显示区域 -->
+        <div class="flex-shrink-0 flex justify-center items-center pt-8 pb-6 px-4">
+            <div class="relative">
+                <!-- 塔罗牌容器 -->
+                <div class="w-32 h-48 glass-card rounded-xl p-3 mystical-pulse relative overflow-hidden">
+                    <!-- 装饰性光效 -->
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-shine/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/50 to-transparent"></div>
+                    
+                    <!-- 恋人牌图片 -->
+                    <div class="w-full h-full bg-gradient-to-br from-pink-dream/60 via-rose-glow/60 to-aurora/50 rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                        <!-- 背景纹理 -->
+                        <div class="absolute inset-0 opacity-20">
+                            <div class="w-full h-full bg-gradient-to-br from-gold-shine/20 to-transparent"></div>
+                        </div>
+                        
+                        <!-- 牌面内容 -->
+                        <div class="relative z-10 text-center">
+                            <div class="text-4xl mb-2 filter drop-shadow-lg">💕</div>
+                            <div class="text-gold-shine text-xs font-serif font-bold mb-1">VI</div>
+                            <div class="text-white text-xs font-serif font-medium">THE LOVERS</div>
+                            <div class="text-gray-300 text-xs font-chinese mt-1">恋人</div>
+                        </div>
+                        
+                        <!-- 装饰性符号 -->
+                        <div class="absolute top-2 left-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute top-2 right-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute bottom-2 left-2 text-gold-shine/30 text-xs">✦</div>
+                        <div class="absolute bottom-2 right-2 text-gold-shine/30 text-xs">✦</div>
+                    </div>
+                </div>
+                
+                <!-- 牌名显示 -->
+                <div class="text-center mt-4">
+                    <h2 class="text-xl font-script mystic-gradient-text font-bold">恋人牌</h2>
+                    <p class="text-gray-400 text-sm font-serif mt-1">The Lovers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 解析内容区域 -->
+        <div class="flex-1 px-4 pb-32 scrollable-content">
+            <div class="max-w-md mx-auto">
+                
+                <!-- 动态内容容器 -->
+                <div id="analysis-content3" class="glass-card rounded-2xl p-5 relative overflow-hidden scrollable-content scroll-gradient" style="max-height: 70vh; min-height: 400px;">
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent"></div>
+                    
+                    <!-- 卡面解析内容 -->
+                    <div id="card-analysis3" class="space-y-4">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-aurora rounded-full"></div>
+                            <h3 class="text-aurora font-medium font-serif text-lg">卡面解析</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            恋人牌是塔罗中最美好的牌之一，它代表着纯粹的爱情、完美的结合以及灵魂的深度连接。牌面上的一对恋人在天使的见证下相拥，象征着神圣的结合与祝福。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            这张牌的出现意味着你们之间不仅仅是身体的结合，更是灵魂的交融。第一次的经历将为你们的关系带来质的飞跃，让你们从此变得不可分离。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            天使的存在提醒我们，你们的结合是被祝福的，是命中注定的。这不是一次简单的相遇，而是两个灵魂在茫茫人海中找到彼此的奇迹。
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-pink-dream/10 to-rose-glow/10 rounded-xl p-4 border border-rose-glow/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                恋人牌预示着你们的关系将进入一个全新的、更加深刻的阶段。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+
+                    <!-- 关系变化内容 -->
+                    <div id="relationship-analysis3" class="space-y-4 hidden">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-rose-glow rounded-full"></div>
+                            <h3 class="text-rose-glow font-medium font-serif text-lg">关系变化</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            第一次之后，你们的关系将发生根本性的转变。原本可能还有的距离感和陌生感会完全消失，取而代之的是一种深度的熟悉感，仿佛你们认识了很久很久。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            你们会变得更加亲密，不仅仅是身体上的，更是情感上的。你们会开始分享更多的秘密，更多的内心世界。他会让你感到前所未有的安全感，而你也会成为他最信任的人。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            这种关系的变化是双向的——你们都会发现对方身上更多的美好，也会更加珍惜彼此。可能原本只是朋友或者暧昧的关系，会正式确立为恋人关系。
+                        </p>
+
+                        <div class="bg-gradient-to-r from-rose-glow/10 to-pink-dream/10 rounded-xl p-4 border border-rose-glow/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                你们会从"我"和"你"变成"我们"，成为真正意义上的一体。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+
+                    <!-- 灵魂变化内容 -->
+                    <div id="seduction-analysis3" class="space-y-4 hidden">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <div class="w-2 h-2 bg-gold-shine rounded-full"></div>
+                            <h3 class="text-gold-shine font-medium font-serif text-lg">灵魂变化</h3>
+                        </div>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            在灵魂层面上，你们都会发生深刻的变化。对你而言，你会感到自己变得更加完整，仿佛找到了失落已久的另一半。你会变得更加自信、更加美丽，因为被深爱着的感觉会让你散发出不一样的光芒。
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            而他也会因为你而变得更加温柔、更加有责任感。你会激发出他内心最好的一面，让他想要成为更好的人来配得上你的爱。
+                        </p>
+                        
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif">
+                            你们都会开始以对方的角度思考问题，会更加关心对方的感受。这种心灵的相通会让你们的爱情变得更加深刻和持久。
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-gold-shine/10 to-rose-glow/10 rounded-xl p-4 border border-gold-shine/20 mb-4">
+                            <p class="text-pink-dream text-sm font-serif italic text-center">
+                                "我们的灵魂本就是一体的，只是现在才找到彼此。"
+                            </p>
+                        </div>
+
+                        <p class="text-gray-300 text-sm leading-relaxed font-serif">
+                            最重要的是，你们都会感受到一种前所未有的幸福感和满足感。这种幸福不是短暂的快乐，而是一种深层的、持久的心灵满足。
+                        </p>
+
+                        <div class="bg-gradient-to-r from-pink-dream/10 to-aurora/10 rounded-xl p-4 border border-pink-dream/20 mt-4">
+                            <p class="text-gray-100 text-sm leading-relaxed font-serif italic">
+                                你们的灵魂将永远记住这个美好的开始，它会成为你们爱情故事中最珍贵的一章。
+                            </p>
+                        </div>
+                        
+                        <!-- 滚动提示 -->
+                        <div class="text-center mt-6 opacity-50">
+                            <p class="text-gray-400 text-xs font-serif">向上滑动查看更多内容 ⬆️</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部切换按钮 -->
+        <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-midnight via-cosmic/95 to-transparent p-4 backdrop-blur-sm">
+            <div class="flex justify-center space-x-1.5 max-w-md mx-auto">
+                <button 
+                    id="btn-card3"
+                    onclick="switchAnalysisTab(3, 'card')" 
+                    class="flex-1 tab-active text-white py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">🎴 卡面解析</span>
+                </button>
+                
+                <button 
+                    id="btn-relationship3"
+                    onclick="switchAnalysisTab(3, 'relationship')" 
+                    class="flex-1 tab-inactive py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">💕 关系变化</span>
+                </button>
+                
+                <button 
+                    id="btn-seduction3"
+                    onclick="switchAnalysisTab(3, 'seduction')" 
+                    class="flex-1 tab-inactive py-3 px-2 rounded-xl font-medium text-xs transition-all relative overflow-hidden group font-serif"
+                >
+                    <span class="relative z-10">✨ 灵魂变化</span>
+                </button>
+            </div>
+            
+            <!-- 返回按钮 -->
+            <div class="mt-3">
+                <button 
+                    onclick="showPage('question-page')" 
+                    class="w-full glass-card border border-white/20 text-white py-3 rounded-xl font-medium text-sm hover:scale-[1.02] transition-all relative overflow-hidden group font-serif max-w-md mx-auto block"
+                >
+                    <span class="relative z-10">🔮 重新占卜</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let selectedCards = {1: [], 2: [], 3: []};
+        let selectedCardForAnalysis = {1: null, 2: null, 3: null};
+        let currentAnalysisTab = {1: 'card', 2: 'card', 3: 'card'};
+        
+        // 塔罗牌数据
+        const tarotCards = [
+            { id: 1, name: "愚者", nameEn: "The Fool", symbol: "🌟", number: "0" },
+            { id: 2, name: "魔术师", nameEn: "The Magician", symbol: "🎭", number: "I" },
+            { id: 3, name: "女祭司", nameEn: "The High Priestess", symbol: "🌙", number: "II" },
+            { id: 4, name: "皇后", nameEn: "The Empress", symbol: "👑", number: "III" },
+            { id: 5, name: "皇帝", nameEn: "The Emperor", symbol: "⚡", number: "IV" },
+            { id: 6, name: "教皇", nameEn: "The Hierophant", symbol: "📿", number: "V" },
+            { id: 7, name: "恋人", nameEn: "The Lovers", symbol: "💕", number: "VI" },
+            { id: 8, name: "战车", nameEn: "The Chariot", symbol: "🏹", number: "VII" },
+            { id: 9, name: "力量", nameEn: "Strength", symbol: "🦁", number: "VIII" },
+            { id: 10, name: "隐士", nameEn: "The Hermit", symbol: "🕯️", number: "IX" },
+        ];
+
+        // 解析标签切换函数
+        function switchAnalysisTab(questionNum, tab) {
+            currentAnalysisTab[questionNum] = tab;
+            
+            // 隐藏所有内容区域
+            document.getElementById('card-analysis' + questionNum).classList.add('hidden');
+            document.getElementById('relationship-analysis' + questionNum).classList.add('hidden');
+            document.getElementById('seduction-analysis' + questionNum).classList.add('hidden');
+            
+            // 显示对应的内容区域
+            document.getElementById(tab + '-analysis' + questionNum).classList.remove('hidden');
+            
+            // 更新按钮样式
+            document.querySelectorAll('[id^="btn-"][id$="' + questionNum + '"]').forEach(btn => {
+                btn.className = btn.className.replace('tab-active', 'tab-inactive');
+            });
+            
+            document.getElementById('btn-' + tab + questionNum).className = 
+                document.getElementById('btn-' + tab + questionNum).className.replace('tab-inactive', 'tab-active');
+        }
+
+        // 页面跳转函数
+        function showPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('[id$="-page"], [id$="-page1"], [id$="-page2"], [id$="-page3"]').forEach(page => {
+                page.classList.add('hidden');
+            });
+            // 显示目标页面
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        function goToQuestionPage() {
+            showPage('question-page');
+        }
+
+        function selectQuestion(questionNum) {
+            showPage('draw-page' + questionNum);
+            initDrawPage(questionNum);
+        }
+
+        function goToSelectPage(questionNum) {
+            if (selectedCards[questionNum].length === 3) {
+                showPage('select-page' + questionNum);
+                initSelectPage(questionNum);
+            }
+        }
+
+        function goToAnalysisPage(questionNum) {
+            if (selectedCardForAnalysis[questionNum]) {
+                showPage('analysis-page' + questionNum);
+                initAnalysisPage(questionNum);
+            }
+        }
+
+        // 初始化抽牌页
+        function initDrawPage(questionNum) {
+            selectedCards[questionNum] = [];
+            updateSelectedCount(questionNum);
+            generateTarotCards(questionNum);
+        }
+
+        // 初始化选牌页
+        function initSelectPage(questionNum) {
+            selectedCardForAnalysis[questionNum] = null;
+            generateSelectedCards(questionNum);
+            updateConfirmButton(questionNum);
+        }
+
+        // 初始化解析页
+        function initAnalysisPage(questionNum) {
+            currentAnalysisTab[questionNum] = 'card';
+            switchAnalysisTab(questionNum, 'card');
+        }
+
+        // 随机打乱数组的函数
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // 生成10张塔罗牌（背面）- 重叠布局
+        function generateTarotCards(questionNum) {
+            const grid = document.getElementById('tarot-grid' + questionNum);
+            grid.innerHTML = '';
+            
+            // 随机打乱塔罗牌顺序
+            const shuffledCards = shuffleArray(tarotCards);
+            
+            // 创建两行，每行5张牌
+            for (let row = 0; row < 2; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'tarot-row';
+                
+                for (let col = 0; col < 5; col++) {
+                    const cardIndex = row * 5 + col;
+                    if (cardIndex >= shuffledCards.length) break;
+                    
+                    const card = shuffledCards[cardIndex];
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'tarot-card-overlapped tarot-card-back w-16 h-24 glass-card rounded-xl p-1.5 cursor-pointer transition-all floating breathing relative overflow-hidden';
+                    cardElement.style.animationDelay = `${cardIndex * 0.1}s`;
+                    cardElement.style.zIndex = `${5 - col}`; // 后面的牌层级更高
+                    cardElement.dataset.cardId = card.id; // 添加卡片ID用于识别
+                    cardElement.dataset.questionNum = questionNum; // 添加问题编号
+                    
+                    cardElement.innerHTML = `
+                        <!-- 装饰性光效 -->
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-shine/50 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/30 to-transparent"></div>
+                        
+                        <!-- 牌背设计 -->
+                        <div class="w-full h-full bg-gradient-to-br from-deep-violet/90 via-mystic-purple/70 to-cosmic/60 rounded-lg flex flex-col items-center justify-center relative">
+                            <!-- 神秘符号 -->
+                            <div class="text-sm mb-1 filter drop-shadow-lg opacity-80">🔮</div>
+                            
+                            <!-- 装饰性花纹 -->
+                            <div class="absolute top-0.5 left-0.5 text-gold-shine/40 text-xs">✦</div>
+                            <div class="absolute top-0.5 right-0.5 text-gold-shine/40 text-xs">✦</div>
+                            <div class="absolute bottom-0.5 left-0.5 text-gold-shine/40 text-xs">✦</div>
+                            <div class="absolute bottom-0.5 right-0.5 text-gold-shine/40 text-xs">✦</div>
+                            
+                            <!-- 中心花纹 -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-4 h-4 border border-gold-shine/30 rounded-full flex items-center justify-center">
+                                    <div class="w-2 h-2 border border-gold-shine/50 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    cardElement.addEventListener('click', () => selectCard(questionNum, card, cardElement));
+                    rowDiv.appendChild(cardElement);
+                }
+                
+                grid.appendChild(rowDiv);
+            }
+        }
+
+        // 选择塔罗牌
+        function selectCard(questionNum, card, element) {
+            if (selectedCards[questionNum].length >= 3 && !selectedCards[questionNum].some(c => c.id === card.id)) {
+                return; // 已选满3张
+            }
+            
+            if (selectedCards[questionNum].some(c => c.id === card.id)) {
+                // 取消选择
+                selectedCards[questionNum] = selectedCards[questionNum].filter(c => c.id !== card.id);
+                element.classList.remove('selected', 'card-glow');
+            } else {
+                // 添加选择
+                selectedCards[questionNum].push(card);
+                element.classList.add('selected', 'card-glow');
+            }
+            
+            updateSelectedCount(questionNum);
+            updateNextButton(questionNum);
+        }
+
+        // 更新选择计数
+        function updateSelectedCount(questionNum) {
+            document.getElementById('selected-count' + questionNum).textContent = selectedCards[questionNum].length;
+        }
+
+        // 更新下一步按钮
+        function updateNextButton(questionNum) {
+            const btn = document.getElementById('next-to-select-btn' + questionNum);
+            if (selectedCards[questionNum].length === 3) {
+                btn.style.opacity = '1';
+                btn.classList.remove('pointer-events-none');
+                btn.classList.add('glow-effect');
+            } else {
+                btn.style.opacity = '0';
+                btn.classList.add('pointer-events-none');
+                btn.classList.remove('glow-effect');
+            }
+        }
+
+        // 生成选牌页的三张牌（正面）
+        function generateSelectedCards(questionNum) {
+            const container = document.getElementById('selected-cards' + questionNum);
+            container.innerHTML = '';
+            
+            selectedCards[questionNum].forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'tarot-card-front w-18 h-28 glass-card rounded-xl p-1.5 cursor-pointer hover:scale-105 transition-all floating breathing relative overflow-hidden';
+                cardElement.style.animationDelay = `${index * 0.2}s`;
+                
+                cardElement.innerHTML = `
+                    <!-- 装饰性光效 -->
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-aurora/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mystic-purple/30 to-transparent"></div>
+                    
+                    <!-- 牌面设计 -->
+                    <div class="w-full h-full bg-gradient-to-br from-aurora/30 via-mystic-purple/40 to-deep-violet/50 rounded-lg flex flex-col items-center justify-center relative">
+                        <!-- 牌面内容 -->
+                        <div class="text-sm mb-1 filter drop-shadow-lg">${card.symbol}</div>
+                        <div class="text-gold-shine text-xs font-serif font-bold mb-0.5">${card.number}</div>
+                        <div class="text-white text-xs font-serif font-medium text-center px-1 leading-tight">${card.nameEn}</div>
+                        <div class="text-gray-300 text-xs font-chinese mt-0.5">${card.name}</div>
+                        
+                        <!-- 装饰性符号 -->
+                        <div class="absolute top-0.5 left-0.5 text-gold-shine/40 text-xs">✦</div>
+                        <div class="absolute top-0.5 right-0.5 text-gold-shine/40 text-xs">✦</div>
+                        <div class="absolute bottom-0.5 left-0.5 text-gold-shine/40 text-xs">✦</div>
+                        <div class="absolute bottom-0.5 right-0.5 text-gold-shine/40 text-xs">✦</div>
+                    </div>
+                `;
+                
+                cardElement.addEventListener('click', () => selectFinalCard(questionNum, card, cardElement));
+                container.appendChild(cardElement);
+            });
+        }
+
+        // 选择最终的牌
+        function selectFinalCard(questionNum, card, element) {
+            // 清除之前的选择
+            document.querySelectorAll('#selected-cards' + questionNum + ' .tarot-card-front').forEach(el => {
+                el.classList.remove('card-glow', 'selected');
+            });
+            
+            // 选择当前牌
+            selectedCardForAnalysis[questionNum] = card;
+            element.classList.add('card-glow', 'selected');
+            
+            updateConfirmButton(questionNum);
+        }
+
+        // 更新确认按钮
+        function updateConfirmButton(questionNum) {
+            const btn = document.getElementById('confirm-choice-btn' + questionNum);
+            if (selectedCardForAnalysis[questionNum]) {
+                btn.style.opacity = '1';
+                btn.classList.remove('pointer-events-none');
+                btn.classList.add('glow-effect');
+            } else {
+                btn.style.opacity = '0';
+                btn.classList.add('pointer-events-none');
+                btn.classList.remove('glow-effect');
+            }
+        }
+
+        // 添加页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有动画元素添加延迟
+            const animatedElements = document.querySelectorAll('.fade-in-up');
+            animatedElements.forEach((element, index) => {
+                element.style.animationDelay = (index * 0.2) + 's';
+            });
+        });
+    </script>
+</body>
+</html>
