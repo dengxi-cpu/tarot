@@ -95,8 +95,8 @@ let customStatuses = {};  // 存储自定义状态的图标等信息
 let currentEditingStatus = '';
 let currentEditingStatusIcon = '';
 // 4.2 状态礼物编辑相关函数
-function editStatusGift(statusName, statusIcon) {
-currentEditingStatus = statusName;
+function editStatusGift(safesafeStatusName, statusIcon) {
+currentEditingStatus = safesafeStatusName;
 currentEditingStatusIcon = statusIcon;
 
 const modal = document.getElementById('statusGiftEditorModal');
@@ -104,11 +104,11 @@ const title = document.getElementById('statusGiftEditorTitle');
 const icon = document.getElementById('statusGiftEditorIcon');
 const textarea = document.getElementById('statusGiftEditorTextarea');
 
-title.textContent = `编辑${statusName}礼物`;
+title.textContent = `编辑${safesafeStatusName}礼物`;
 icon.textContent = statusIcon;
 
 // 加载当前状态的礼物内容
-const currentGifts = statusGifts[statusName] || [];
+const currentGifts = statusGifts[safesafeStatusName] || [];
 textarea.value = currentGifts.join('\n');
 
 modal.classList.add('show');
@@ -135,11 +135,11 @@ closeStatusGiftEditor();
 alert('礼物已保存！');
 }
 
-function updateStatusGiftPreview(statusName) {
-const card = document.querySelector(`[data-status="${statusName}"]`);
+function updateStatusGiftPreview(safesafeStatusName) {
+const card = document.querySelector(`[data-status="${safesafeStatusName}"]`);
 if (card) {
  const preview = card.querySelector('.status-gift-preview');
- const gifts = statusGifts[statusName] || [];
+ const gifts = statusGifts[safesafeStatusName] || [];
  if (gifts.length > 0) {
      // 显示前两个礼物作为预览
      const previewText = gifts.slice(0, 2).join('；');
@@ -152,13 +152,13 @@ if (card) {
 
 function createCustomStatusGift() {
 // 弹出输入框让用户输入状态名称
-const statusName = prompt('请输入自定义状态名称（建议2-4个字符）：');
+const safesafeStatusName = prompt('请输入自定义状态名称（建议2-4个字符）：');
 
-if (!statusName || !statusName.trim()) {
+if (!safesafeStatusName || !safesafeStatusName.trim()) {
  return;
 }
 
-const trimmedName = statusName.trim();
+const trimmedName = safesafeStatusName.trim();
 if (trimmedName.length > 6) {
  alert('状态名称不能超过6个字符');
  return;
@@ -206,18 +206,18 @@ setTimeout(() => {
 }
 
 
-function addCustomStatusCard(statusName, statusIcon) {
+function addCustomStatusCard(safesafeStatusName, statusIcon) {
 const grid = document.getElementById('statusGiftGrid');
 const customButton = grid.querySelector('.custom-status-card');
 
 const newCard = document.createElement('div');
 newCard.className = 'status-gift-card';
-newCard.setAttribute('data-status', statusName);
+newCard.setAttribute('data-status', safesafeStatusName);
 
 newCard.innerHTML = `
  <div class="status-gift-header">
      <span class="status-gift-icon">${statusIcon}</span>
-     <span class="status-gift-name">${statusName}</span>
+     <span class="status-gift-name">${safesafeStatusName}</span>
  </div>
  <div class="status-gift-preview">点击编辑礼物内容</div>
  <div class="status-gift-edit-indicator">✏️</div>
@@ -234,37 +234,37 @@ if (customButton) {
 }
 
 // 同步到专注页状态选择器
-syncCustomStatusToFocusPage(statusName, statusIcon);
+syncCustomStatusToFocusPage(safesafeStatusName, statusIcon);
 }
 
-function deleteCustomStatusGift(statusName) {
+function deleteCustomStatusGift(safesafeStatusName) {
 // 检查是否是预设状态
 const presetStatuses = ['学习', '工作', '冒险', '逛街', '玩游戏', '发呆', '睡觉', '休息'];
-if (presetStatuses.includes(statusName)) {
+if (presetStatuses.includes(safesafeStatusName)) {
  alert('预设状态不能删除，只能编辑');
  return;
 }
 
-if (confirm(`确定要删除"${statusName}"状态吗？此操作不可恢复。`)) {
+if (confirm(`确定要删除"${safesafeStatusName}"状态吗？此操作不可恢复。`)) {
  // 从存储中删除
- delete statusGifts[statusName];
- delete customStatuses[statusName];
+ delete statusGifts[safesafeStatusName];
+ delete customStatuses[safesafeStatusName];
  
  // 保存到本地存储
  saveStatusGiftsToStorage();
  saveCustomStatusesToStorage();
  
  // 从页面中移除卡片
- const card = document.querySelector(`[data-status="${statusName}"]`);
+ const card = document.querySelector(`[data-status="${safesafeStatusName}"]`);
  if (card) {
      card.remove();
  }
  
  // 从专注页移除对应的状态选项
- removeCustomStatusFromFocusPage(statusName);
+ removeCustomStatusFromFocusPage(safesafeStatusName);
  
  // 提示删除成功
- console.log(`已删除自定义状态: ${statusName}`);
+ console.log(`已删除自定义状态: ${safesafeStatusName}`);
 }
 }
 
@@ -292,23 +292,23 @@ if (saved) {
 }
 
 // 同步自定义状态到专注页面（新增）
-function syncCustomStatusToFocusPage(statusName, statusIcon) {
+function syncCustomStatusToFocusPage(safesafeStatusName, statusIcon) {
 const statusGrid = document.querySelector('#statusSelector .status-grid');
 if (!statusGrid) return;
 
 // 检查是否已存在
-const existingOption = statusGrid.querySelector(`[data-custom-status="${statusName}"]`);
+const existingOption = statusGrid.querySelector(`[data-custom-status="${safesafeStatusName}"]`);
 if (existingOption) return;
 
 // 创建新的状态选项
 const statusOption = document.createElement('div');
 statusOption.className = 'status-option';
-statusOption.setAttribute('data-custom-status', statusName);
-statusOption.onclick = () => selectStatus(statusName, statusIcon);
+statusOption.setAttribute('data-custom-status', safesafeStatusName);
+statusOption.onclick = () => selectStatus(safesafeStatusName, statusIcon);
 
 statusOption.innerHTML = `
  <span class="status-icon">${statusIcon}</span>
- <span class="status-text">${statusName}</span>
+ <span class="status-text">${safesafeStatusName}</span>
 `;
 
 // 插入到自定义选项之前
@@ -321,8 +321,8 @@ if (customStatusOption) {
 }
 
 // 从专注页面移除自定义状态（新增）
-function removeCustomStatusFromFocusPage(statusName) {
-const statusOption = document.querySelector(`[data-custom-status="${statusName}"]`);
+function removeCustomStatusFromFocusPage(safesafeStatusName) {
+const statusOption = document.querySelector(`[data-custom-status="${safesafeStatusName}"]`);
 if (statusOption) {
  statusOption.remove();
 }
@@ -330,9 +330,9 @@ if (statusOption) {
 
 // 初始化专注页面的自定义状态选项（新增）
 function initCustomStatusInFocusPage() {
-Object.keys(customStatuses).forEach(statusName => {
- const statusInfo = customStatuses[statusName];
- syncCustomStatusToFocusPage(statusName, statusInfo.icon);
+Object.keys(customStatuses).forEach(safesafeStatusName => {
+ const statusInfo = customStatuses[safesafeStatusName];
+ syncCustomStatusToFocusPage(safesafeStatusName, statusInfo.icon);
 });
 }
 
@@ -360,8 +360,8 @@ if (!statusGiftGrid) {
 }
 
 // 初始化所有状态礼物卡片的预览
-Object.keys(statusGifts).forEach(statusName => {
- updateStatusGiftPreview(statusName);
+Object.keys(statusGifts).forEach(safesafeStatusName => {
+ updateStatusGiftPreview(safesafeStatusName);
 });
 
 // 加载自定义状态卡片
@@ -408,8 +408,8 @@ event.stopPropagation();
 
 // 如果点击的是删除按钮
 if (clickedElement.closest('.custom-status-delete')) {
- const statusName = card.getAttribute('data-status');
- deleteCustomStatusGift(statusName);
+ const safesafeStatusName = card.getAttribute('data-status');
+ deleteCustomStatusGift(safesafeStatusName);
  return;
 }
 
@@ -420,42 +420,42 @@ if (card.classList.contains('custom-status-card')) {
 }
 
 // 其他情况：编辑礼物
-const statusName = card.getAttribute('data-status');
+const safesafeStatusName = card.getAttribute('data-status');
 const iconElement = card.querySelector('.status-gift-icon');
 const statusIcon = iconElement ? iconElement.textContent : '✨';
 
-editStatusGift(statusName, statusIcon);
+editStatusGift(safesafeStatusName, statusIcon);
 }
 
 function loadCustomStatusCards() {
 const presetStatuses = ['学习', '工作', '冒险', '逛街', '玩游戏', '发呆', '睡觉', '休息'];
 const customStatuses = Object.keys(statusGifts).filter(status => !presetStatuses.includes(status));
 
-customStatuses.forEach(statusName => {
+customStatuses.forEach(safesafeStatusName => {
  // 为自定义状态创建图标（可以从专注页的状态选择器中获取，或使用默认图标）
  const statusIcon = '✨'; // 默认图标，可以考虑保存图标信息
- addCustomStatusCard(statusName, statusIcon);
- updateStatusGiftPreview(statusName);
+ addCustomStatusCard(safesafeStatusName, statusIcon);
+ updateStatusGiftPreview(safesafeStatusName);
 });
 }
 // 同步自定义状态到专注页
-function syncCustomStatusToFocusPage(statusName, statusIcon) {
+function syncCustomStatusToFocusPage(safesafeStatusName, statusIcon) {
 const statusGrid = document.querySelector('#statusSelector .status-grid');
 if (!statusGrid) return;
 
 // 检查是否已存在
-const existingOption = statusGrid.querySelector(`[data-custom-status="${statusName}"]`);
+const existingOption = statusGrid.querySelector(`[data-custom-status="${safesafeStatusName}"]`);
 if (existingOption) return;
 
 // 创建新的状态选项
 const statusOption = document.createElement('div');
 statusOption.className = 'status-option';
-statusOption.setAttribute('data-custom-status', statusName);
-statusOption.onclick = () => selectStatus(statusName, statusIcon);
+statusOption.setAttribute('data-custom-status', safesafeStatusName);
+statusOption.onclick = () => selectStatus(safesafeStatusName, statusIcon);
 
 statusOption.innerHTML = `
  <span class="status-icon">${statusIcon}</span>
- <span class="status-text">${statusName}</span>
+ <span class="status-text">${safesafeStatusName}</span>
 `;
 
 // 插入到自定义选项之前
@@ -466,8 +466,8 @@ if (customStatusOption) {
 }
 
 // 从专注页移除自定义状态
-function removeCustomStatusFromFocusPage(statusName) {
-const statusOption = document.querySelector(`[data-custom-status="${statusName}"]`);
+function removeCustomStatusFromFocusPage(safesafeStatusName) {
+const statusOption = document.querySelector(`[data-custom-status="${safesafeStatusName}"]`);
 if (statusOption) {
  statusOption.remove();
 }
@@ -478,24 +478,24 @@ function initCustomStatusInFocusPage() {
 const presetStatuses = ['学习', '工作', '冒险', '逛街', '玩游戏', '发呆', '睡觉', '休息'];
 const customStatuses = Object.keys(statusGifts).filter(status => !presetStatuses.includes(status));
 
-customStatuses.forEach(statusName => {
+customStatuses.forEach(safesafeStatusName => {
  // 尝试从本地存储获取图标，或使用默认图标
- const statusIcon = getCustomStatusIcon(statusName) || '✨';
- syncCustomStatusToFocusPage(statusName, statusIcon);
+ const statusIcon = getCustomStatusIcon(safesafeStatusName) || '✨';
+ syncCustomStatusToFocusPage(safesafeStatusName, statusIcon);
 });
 }
 
 // 获取自定义状态的图标（可以扩展保存图标功能）
-function getCustomStatusIcon(statusName) {
+function getCustomStatusIcon(safesafeStatusName) {
 // 可以从localStorage获取保存的图标信息
 const customStatusIcons = JSON.parse(localStorage.getItem('customStatusIcons') || '{}');
-return customStatusIcons[statusName] || '✨';
+return customStatusIcons[safesafeStatusName] || '✨';
 }
 
 // 保存自定义状态图标
-function saveCustomStatusIcon(statusName, statusIcon) {
+function saveCustomStatusIcon(safesafeStatusName, statusIcon) {
 const customStatusIcons = JSON.parse(localStorage.getItem('customStatusIcons') || '{}');
-customStatusIcons[statusName] = statusIcon;
+customStatusIcons[safesafeStatusName] = statusIcon;
 localStorage.setItem('customStatusIcons', JSON.stringify(customStatusIcons));
 }
 
@@ -912,20 +912,26 @@ let detailedStats = {
 
 // 番茄钟记录结构
 function createPomodoroRecord(duration, status, taskName, statusName) {
+    // 在 return 之前处理参数
+    const safeTaskName = taskName && taskName.trim() ? taskName.trim() : '未命名任务';
+    const safeStatusName = statusName && statusName.trim() ? statusName.trim() : '学习';
+    
     return {
         id: Date.now(),
         date: new Date().toISOString(),
         duration: duration, // 秒
         status: status, // 'completed', 'abandoned'
-        taskName: taskName || '未命名任务',
-        statusName: statusName || '学习',
+        taskName: safeTaskName,  // 注意这里改了键名
+        statusName: safeStatusName,  // 这里也改了（原来有拼写错误）
         timestamp: Date.now()
     };
 }
 
 // 记录番茄钟完成
-function recordPomodoro(duration, taskName, statusName) {
-    const record = createPomodoroRecord(duration, 'completed', taskName, statusName);
+function recordPomodoro(duration, safeTaskName, safesafeStatusName) {
+    const record = createPomodoroRecord(duration, 'completed', safeTaskName, safesafeStatusName);
+    const taskKey = record.taskName;
+
     
     // 添加到记录列表
     if (!detailedStats.pomodoros) {
@@ -934,22 +940,23 @@ function recordPomodoro(duration, taskName, statusName) {
     detailedStats.pomodoros.push(record);
     
     // 更新任务统计
-    if (!detailedStats.taskStats[statusName]) {
-        detailedStats.taskStats[statusName] = {
-            count: 0,
-            totalTime: 0
-        };
-    }
-    detailedStats.taskStats[statusName].count++;
-    detailedStats.taskStats[statusName].totalTime += duration;
+if (!detailedStats.taskStats[taskKey]) {
+    detailedStats.taskStats[taskKey] = {
+        count: 0,
+        totalTime: 0
+    };
+}
+detailedStats.taskStats[taskKey].count++;
+detailedStats.taskStats[taskKey].totalTime += duration;
+
     
     // 保存到本地存储
     saveDetailedStats();
 }
 
 // 记录番茄钟放弃
-function recordAbandonedPomodoro(duration, taskName, statusName) {
-    const record = createPomodoroRecord(duration, 'abandoned', taskName, statusName);
+function recordAbandonedPomodoro(duration, safeTaskName, safesafeStatusName) {
+    const record = createPomodoroRecord(duration, 'abandoned', safeTaskName, safesafeStatusName);
     
     if (!detailedStats.pomodoros) {
         detailedStats.pomodoros = [];
@@ -2065,7 +2072,7 @@ function loadDataCenterContent() {
             <!-- OC的话 -->
             <div class="px-4 mb-4">
                 <div class="flex items-start gap-3">
-                    <div class="oc-avatar-small flex-shrink-0">OC</div>
+                    <img id="dataCenterOCAvatar" class="oc-avatar-small flex-shrink-0 w-10 h-10 rounded-full object-cover" src="" alt="OC">
                     <div class="oc-bubble flex-1 p-4">
                         <p id="ocDataMessage" class="text-sm text-gray-700 leading-relaxed"></p>
                     </div>
@@ -2172,7 +2179,12 @@ function loadDataCenterContent() {
             </div>
         </div>
     `;
-    
+    const dcAvatar = document.getElementById('dataCenterOCAvatar');
+if (dcAvatar && Array.isArray(ocData) && ocData.length > 0) {
+    const oc = ocData[currentOCIndex] || ocData[0];
+    dcAvatar.src = oc.avatar;
+}
+
         // 初始化数据中心
     // [修改] 使用setTimeout确保canvas元素已准备好
     setTimeout(initDataCenter, 50); 
@@ -2376,17 +2388,18 @@ function getPeriodData(timeTab, date, allPomodoros) {
     // 统计任务类型
     const taskStats = {};
     periodPomodoros.forEach(p => {
-        const status = p.statusName || '其他';
-        if (!taskStats[status]) {
-            taskStats[status] = {
+        const taskName = (p.taskName && p.taskName.trim()) ? p.taskName.trim() : '未命名任务';
+
+        if (!taskStats[taskName]) {
+            taskStats[taskName] = {
                 count: 0,
                 time: 0
             };
         }
         if (p.status === 'completed') {
-            taskStats[status].count++;
+            taskStats[taskName].count++;
         }
-        taskStats[status].time += p.duration || 0;
+        taskStats[taskName].time += p.duration || 0;
     });
     
     return {
@@ -2466,8 +2479,11 @@ function renderTaskPieChart() {
 const labels = Object.keys(taskStats);
 const data = labels.map(label => Math.floor(taskStats[label].time / 60)); // 转换为分钟
 const times = labels.map(label => formatDuration(taskStats[label].time));
+const counts = labels.map(label => taskStats[label].count);
 
-const chartData = { labels, data, times };
+
+const chartData = { labels, data, times, counts };
+
 
     
     const PIE_CHART_COLORS = ['#dae67a', '#b8bae1', '#e8b5d6', '#eb70a7', '#787cb1', '#cba2b4', '#f9c89b', '#fff297'];
@@ -2494,7 +2510,13 @@ const chartData = { labels, data, times };
                     display: true,
                     color: '#333',
                     font: { size: 11, weight: '500' },
-                    formatter: (value, context) => `${chartData.labels[context.dataIndex]}\n${chartData.times[context.dataIndex]}`,
+                    formatter: (value, context) => {
+    const label = chartData.labels[context.dataIndex];
+    const time = chartData.times[context.dataIndex];
+    const count = chartData.counts[context.dataIndex];
+    return `${label}\n${time} · ${count}次`;
+},
+
                     anchor: 'end',
                     align: 'end',
                     offset: 10,
@@ -3046,6 +3068,9 @@ initializeStatusGiftPreviews();
      const oc = ocData[index];
      
      document.getElementById('currentOCAvatar').src = oc.avatar;
+     const dcAvatar = document.getElementById('dataCenterOCAvatar');
+if (dcAvatar) dcAvatar.src = oc.avatar;
+
      document.getElementById('currentOCName').textContent = oc.name;
      
      let greeting;
@@ -3182,27 +3207,31 @@ initializeStatusGiftPreviews();
      }
  }
 
- function selectTask(name, status, color) {
-     currentTask = { name, status, color };
-     
-     document.getElementById('currentTaskName').textContent = name;
-     const statusElement = document.getElementById('currentTaskStatus');
-     statusElement.textContent = status;
-     
-     statusElement.className = 'text-xs px-2 py-1 rounded-full';
-     if (color === 'slate') {
-         statusElement.classList.add('text-slate-500', 'bg-slate-100');
-     } else {
-         statusElement.classList.add('text-blue-500', 'bg-blue-100');
-     }
-     
-     document.querySelectorAll('.task-option').forEach(option => {
-         option.classList.remove('active');
-     });
-     event.currentTarget.classList.add('active');
-     
-     document.getElementById('taskSelector').classList.remove('show');
- }
+function selectTask(name, status, color) {
+    currentTask = { name, status, color };
+
+    const taskNameElement = document.getElementById('currentTaskName');
+    if (taskNameElement) {
+        taskNameElement.textContent = name;
+    }
+
+    const statusElement = document.getElementById('currentTaskStatus');
+    statusElement.textContent = status;
+
+    statusElement.className = 'text-xs px-2 py-1 rounded-full';
+    if (color === 'slate') {
+        statusElement.classList.add('text-slate-500', 'bg-slate-100');
+    } else {
+        statusElement.classList.add('text-blue-500', 'bg-blue-100');
+    }
+
+    document.querySelectorAll('.task-option').forEach(option => {
+        option.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+
+    document.getElementById('taskSelector').classList.remove('show');
+}
 
  function toggleStatusSelector() {
      const selector = document.getElementById('statusSelector');
@@ -3750,14 +3779,14 @@ return defaultGifts[Math.floor(Math.random() * defaultGifts.length)];
      }
  }
 
- function showCompletionModal(completionMessage, ocName, statusName, gift) {
+ function showCompletionModal(completionMessage, ocName, safesafeStatusName, gift) {
 const modal = document.getElementById('completionModal');
 const titleElement = document.getElementById('completionTitle');
 const giftElement = document.getElementById('completionGift');
 
 titleElement.textContent = `🎉 ${completionMessage}`;
 // 修改：改变排版格式，添加换行
-giftElement.innerHTML = `${ocName}${statusName}结束啦，给你带回了<br>${gift}`;
+giftElement.innerHTML = `${ocName}${safesafeStatusName}结束啦，给你带回了<br>${gift}`;
 
 modal.classList.add('show');
 }
